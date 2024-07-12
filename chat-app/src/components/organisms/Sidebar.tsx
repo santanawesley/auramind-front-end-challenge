@@ -2,6 +2,8 @@ import { Box } from "@chakra-ui/react";
 
 import IconButton from "@/components/atoms/IconButton";
 import Button from "@/components/atoms/Button";
+import ChatList from "@/components/organisms/ChatList";
+import AuthButtons from "@/components/organisms/AuthButton";
 import ResizeIcon from "@/assets/icons/list.svg";
 import AddIcon from "@/assets/icons/plus-circle.svg";
 
@@ -50,6 +52,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isExpanded, toggleSidebar }) => {
           {isExpanded && "Novo Chat"}
         </Button>
       </Box>
+
+      {isExpanded ? <ChatList /> : ""}
+      <AuthButtons isExpanded={isExpanded} />
     </Box>
   );
 };
