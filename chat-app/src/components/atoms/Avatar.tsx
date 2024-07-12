@@ -1,4 +1,3 @@
-// src/components/atoms/Avatar.tsx
 import { Avatar as ChakraAvatar, AvatarProps } from "@chakra-ui/react";
 
 const Avatar: React.FC<AvatarProps> = (props) => {

@@ -1,11 +1,10 @@
-// src/components/molecules/MessageItem.tsx
 import { Box, Text } from "@chakra-ui/react";
 
-interface MessageItemProps {
+interface MessagesTitlesProps {
   title: string;
 }
 
-const MessageItem: React.FC<MessageItemProps> = ({ title }) => {
+const MessagesTitles: React.FC<MessagesTitlesProps> = ({ title }) => {
   return (
     <Box p="2" borderBottom="1px solid" borderColor="gray.200">
       <Text>{title}</Text>
@@ -13,4 +12,4 @@ const MessageItem: React.FC<MessageItemProps> = ({ title }) => {
   );
 };
 
-export default MessageItem;
+export default MessagesTitles;
