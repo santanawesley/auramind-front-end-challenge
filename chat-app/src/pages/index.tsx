@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Text } from "@chakra-ui/react";
 
-import Sidebar from "@/components/sidebar";
+import Sidebar from "@/components/organisms/Sidebar";
 
 export default function Home() {
   const [isExpanded, setIsExpanded] = useState(true);
