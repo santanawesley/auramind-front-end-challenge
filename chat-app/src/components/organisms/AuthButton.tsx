@@ -8,10 +8,10 @@ import Form from "@/components/molecules/Form";
 import LogoutIcon from "@/assets/icons/sign-out.svg";
 
 type AuthButtonsProps = {
-  isExpanded: boolean;
+  isSidebarExpanded: boolean;
 };
 
-const AuthButtons: React.FC<AuthButtonsProps> = ({ isExpanded }) => {
+const AuthButtons: React.FC<AuthButtonsProps> = ({ isSidebarExpanded }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [showForm, setShowForm] = useState<"login" | "signup" | null>(null);
 
@@ -35,26 +35,31 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ isExpanded }) => {
           display="flex"
           justifyContent="space-around"
           gap={4}
-          bg={isExpanded ? "#F9FAFA" : "inherit"}
+          bg={isSidebarExpanded ? "#F9FAFA" : "inherit"}
           paddingY="4"
           borderRadius="8"
         >
           <Box display="flex" alignItems="center" gap="2">
+            {/* Caso a url abaixo não funcione ele utiliza as iniciais do nome ou um avatar de usuário padrão */}
             <Avatar
               src="/images/default-avatar.png"
-              width={isExpanded ? "12" : "9"}
-              height={isExpanded ? "12" : "9"}
+              width={isSidebarExpanded ? "12" : "9"}
+              height={isSidebarExpanded ? "12" : "9"}
+              name="Wesley Ribeiro de Santana"
             />
-            {isExpanded ? (
+            {isSidebarExpanded ? (
               <Text>
                 Seja bem-vindo,
-                <Text fontWeight="bold">Wesley</Text>
+                <br />
+                <Box as="span" fontWeight="bold">
+                  Wesley
+                </Box>
               </Text>
             ) : (
               ""
             )}
           </Box>
-          {isExpanded ? (
+          {isSidebarExpanded ? (
             <IconButton
               aria-label="Logout"
               icon={<LogoutIcon />}
@@ -64,7 +69,7 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ isExpanded }) => {
             ""
           )}
         </Box>
-      ) : isExpanded ? (
+      ) : isSidebarExpanded ? (
         <Box display="flex" flexDirection="column" gap="2">
           <Button colorScheme="blue" onClick={handleLogin}>
             Entrar
