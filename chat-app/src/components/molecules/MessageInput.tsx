@@ -42,6 +42,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
         right="12px"
         border="none"
         bg="#F9FAFA"
+        zIndex="2"
       />
     </Flex>
   );
