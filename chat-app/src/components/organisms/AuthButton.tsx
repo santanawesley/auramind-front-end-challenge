@@ -40,7 +40,7 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ isSidebarExpanded }) => {
           borderRadius="8"
         >
           <Box display="flex" alignItems="center" gap="2">
-            {/* Caso a url abaixo não funcione ele utiliza as iniciais do nome ou um avatar de usuário padrão */}
+            {/* Caso o usuário não esteje logado, ele utiliza um avatar de usuário padrão ao invés das iniciais do nome */}
             <Avatar
               src="/images/default-avatar.png"
               width={isSidebarExpanded ? "12" : "9"}

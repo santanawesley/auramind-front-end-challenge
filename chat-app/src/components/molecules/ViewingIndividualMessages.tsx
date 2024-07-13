@@ -4,17 +4,16 @@ import DeleteIcon from "@/assets/icons/trash.svg";
 import IconButton from "@/components/atoms/IconButton";
 import Avatar from "@/components/atoms/Avatar";
 
-interface ViewingIndividualMessagesProps {
-  sender: "user" | "ai";
-  content: string;
-  avatarUrl: string;
+import { Message } from "@/components/organisms/ChatWindow";
+
+interface ViewingIndividualMessagesProps extends Message {
   onDelete?: () => void;
 }
 
 const ViewingIndividualMessages: React.FC<ViewingIndividualMessagesProps> = ({
   sender,
   content,
-  avatarUrl,
+  name,
   onDelete,
 }) => {
   return (
@@ -44,8 +43,8 @@ const ViewingIndividualMessages: React.FC<ViewingIndividualMessagesProps> = ({
           }
         />
       ) : (
-        // Caso a url abaixo não funcione ele utiliza as iniciais do nome ou um avatar de usuário padrão
-        <Avatar src={avatarUrl} />
+        // Caso o usuário não esteje logado, ele utiliza um avatar de usuário padrão ao invés das iniciais do nome
+        <Avatar name={name} />
       )}
 
       <Box
