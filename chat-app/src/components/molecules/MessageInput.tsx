@@ -16,9 +16,13 @@ const MessageInput: React.FC<MessageInputProps> = ({
   onSend,
 }) => {
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && input.trim()) {
       onSend();
     }
+  };
+
+  const checkEmptyMessage = () => {
+    input.trim() && onSend();
   };
 
   return (
@@ -37,7 +41,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
       <IconButton
         icon={<GrUploadOption />}
         aria-label="Enviar mensagem"
-        onClick={onSend}
+        onClick={checkEmptyMessage}
         position="absolute"
         right="12px"
         border="none"
