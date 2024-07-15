@@ -1,17 +1,21 @@
 import IconButton from "@/components/atoms/IconButton";
-import ResizeIcon from "@/assets/icons/list.svg";
+import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
 
 interface SidebarToggleProps {
+  isExpanded: boolean;
   onToggle: () => void;
 }
 
-const SidebarToggle: React.FC<SidebarToggleProps> = ({ onToggle }) => {
+const SidebarToggle: React.FC<SidebarToggleProps> = ({
+  isExpanded,
+  onToggle,
+}) => {
   return (
     <IconButton
-      icon={<ResizeIcon />}
-      aria-label="Toggle Sidebar"
+      icon={isExpanded ? <GrFormPreviousLink /> : <GrFormNextLink />}
+      aria-label="Alternar barra lateral"
       onClick={onToggle}
-      bg="inherit"
+      bg="#F8F8FF"
     />
   );
 };

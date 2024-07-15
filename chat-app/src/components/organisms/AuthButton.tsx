@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Box, Text } from "@chakra-ui/react";
+import { GrLogout } from "react-icons/gr";
 
 import Avatar from "@/components/atoms/Avatar";
 import Button from "@/components/atoms/Button";
 import IconButton from "@/components/atoms/IconButton";
 import Form from "@/components/molecules/Form";
-import LogoutIcon from "@/assets/icons/sign-out.svg";
 
 type AuthButtonsProps = {
   isSidebarExpanded: boolean;
@@ -62,7 +62,7 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ isSidebarExpanded }) => {
           {isSidebarExpanded ? (
             <IconButton
               aria-label="Logout"
-              icon={<LogoutIcon />}
+              icon={<GrLogout />}
               onClick={handleLogout}
             />
           ) : (

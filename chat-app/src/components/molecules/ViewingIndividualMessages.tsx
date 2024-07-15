@@ -1,6 +1,6 @@
 import { Box, Text, Flex } from "@chakra-ui/react";
+import { GrTrash } from "react-icons/gr";
 
-import DeleteIcon from "@/assets/icons/trash.svg";
 import IconButton from "@/components/atoms/IconButton";
 import Avatar from "@/components/atoms/Avatar";
 
@@ -60,9 +60,11 @@ const ViewingIndividualMessages: React.FC<ViewingIndividualMessagesProps> = ({
         margin="auto"
       >
         {sender === "user" && (
-          <IconButton
-            icon={<DeleteIcon />}
-            aria-label="Toggle Sidebar"
+          <Box
+            as={GrTrash}
+            w={"22px"}
+            h={"22px"}
+            aria-label="Apagar mensagem"
             onClick={onDelete}
             bg="none"
             cursor="pointer"

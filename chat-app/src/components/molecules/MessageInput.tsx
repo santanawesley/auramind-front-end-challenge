@@ -1,8 +1,8 @@
 import { Flex } from "@chakra-ui/react";
+import { GrUploadOption } from "react-icons/gr";
 
 import Input from "@/components/atoms/Input";
 import IconButton from "@/components/atoms/IconButton";
-import SendIcon from "@/assets/icons/send.svg";
 
 interface MessageInputProps {
   input: string;
@@ -35,8 +35,8 @@ const MessageInput: React.FC<MessageInputProps> = ({
         border="2px solid #02040F"
       />
       <IconButton
-        icon={<SendIcon />}
-        aria-label="Send message"
+        icon={<GrUploadOption />}
+        aria-label="Enviar mensagem"
         onClick={onSend}
         position="absolute"
         right="12px"

@@ -5,7 +5,7 @@ import Button from "@/components/atoms/Button";
 import ChatList from "@/components/organisms/ChatList";
 import SidebarToggle from "@/components/molecules/SidebarToggle";
 import AuthButtons from "@/components/organisms/AuthButton";
-import AddIcon from "@/assets/icons/plus-circle.svg";
+import { GrAddCircle } from "react-icons/gr";
 
 interface SidebarProps {
   isSidebarExpanded: (isExpanded: boolean) => void;
@@ -38,7 +38,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarExpanded }) => {
         flexDirection="column"
         alignItems={isExpanded ? "flex-end" : "center"}
       >
-        <SidebarToggle onToggle={toggleSidebar} />
+        <SidebarToggle onToggle={toggleSidebar} isExpanded={isExpanded} />
 
         <Button
           mt="4"
@@ -55,12 +55,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarExpanded }) => {
           p={isExpanded ? "6" : "0"}
           fontWeight="normal"
         >
-          {/* 
-            Não foi utilizado o rightIcon={<AddIcon />} dentro do button devido a 
-            dificuldade de remover o marginLeft padrão dentro de uma estrutura interna. 
-            Já da forma abaixo <Box as={AddIcon} /> foi possível
-          */}
-          <Box as={AddIcon} marginLeft={0} />
+          <Box as={GrAddCircle} />
           {isExpanded && "Novo Chat"}
         </Button>
       </Box>

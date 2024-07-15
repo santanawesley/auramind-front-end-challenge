@@ -14,6 +14,10 @@ const theme = extendTheme({
         margin: 0,
         padding: 0,
       },
+      svg: {
+        width: "28px",
+        height: "28px",
+      }
     },
   },
 });
