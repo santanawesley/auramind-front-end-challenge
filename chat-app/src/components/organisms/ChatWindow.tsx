@@ -3,8 +3,8 @@ import { Box, Flex } from "@chakra-ui/react";
 
 import MessageInput from "@/components/molecules/MessageInput";
 import ViewingMessages from "@/components/organisms/ViewingMessages";
-import { getAIResponse } from "@/utils/aiSimulator";
 
+import { getAIResponse } from "@/utils/aiSimulator";
 import { useAuth } from "@/contexts/AuthContext";
 import { Conversation, Message } from "@/types";
 
@@ -13,7 +13,7 @@ type ChatWindowProps = {
 };
 
 const ChatWindow: React.FC<ChatWindowProps> = ({ isSidebarExpanded }) => {
-  const { user, updateConversations } = useAuth();
+  const { user, updateConversations, idToChangeConversation } = useAuth();
 
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [currentConversationId, setCurrentConversationId] = useState<
@@ -25,16 +25,26 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isSidebarExpanded }) => {
     const savedConversations = user?.conversations;
     if (savedConversations?.length) {
       setConversations(savedConversations);
-      setCurrentConversationId(
-        savedConversations ? savedConversations[0].id : null
-      );
     }
-    if (!user) setConversations([]);
-    if (!user) setCurrentConversationId(null);
+    if (!user) {
+      setConversations([]);
+      setCurrentConversationId(null);
+    }
   }, [user]);
 
   useEffect(() => {
     updateConversations(conversations);
+  }, [conversations]);
+
+  useEffect(() => {
+    setCurrentConversationId(idToChangeConversation);
+  }, [idToChangeConversation]);
+
+  useEffect(() => {
+    // Atualiza a conversa atual quando uma nova conversa for adicionada
+    if (conversations.length && currentConversationId === null) {
+      setCurrentConversationId(conversations[conversations.length - 1].id);
+    }
   }, [conversations]);
 
   const truncate = (str: string, length: number) => {

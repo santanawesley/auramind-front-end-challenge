@@ -1,18 +1,29 @@
 import { Box } from "@chakra-ui/react";
 
-import MessagesTitles from "@/components/atoms/MessagesTitles";
+import ItemMenu from "@/components/atoms/ItemMenu";
 
-const chats = [
-  { id: 1, title: "Mensagem 1..." },
-  { id: 2, title: "Mensagem 2..." },
-  { id: 3, title: "Mensagem 3..." },
-];
+import { useAuth } from "@/contexts/AuthContext";
 
 const ChatList: React.FC = () => {
+  const { user, changeConversation } = useAuth();
+
+  const chatsTitles = user?.conversations
+    ?.filter((conversation) => conversation.title)
+    .map((conversation) => ({
+      id: conversation.id,
+      title: conversation.title,
+    }))
+    .reverse();
+
   return (
     <Box overflowY="auto" h="full" w="full">
-      {chats.map((chat) => (
-        <MessagesTitles key={chat.id} title={chat.title} />
+      {chatsTitles?.map((chat) => (
+        <ItemMenu
+          key={chat.id}
+          title={chat.title}
+          idClicked={changeConversation}
+          id={chat.id}
+        />
       ))}
     </Box>
   );

@@ -14,6 +14,8 @@ interface AuthContextType {
   login: (email: string, password: string) => boolean;
   logout: () => void;
   updateConversations: (conversations: Conversation[]) => void;
+  changeConversation: (id: string | null) => void;
+  idToChangeConversation: string | null;
 }
 
 interface AuthProviderProps {
@@ -24,6 +26,9 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [idToChangeConversation, setIdToChangeConversation] = useState<
+    string | null
+  >(null);
 
   useEffect(() => {
     const authenticatedUserEmail = localStorage.getItem(
@@ -99,9 +104,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const changeConversation = (idToChangeConversation: string | null) => {
+    setIdToChangeConversation(idToChangeConversation);
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, register, login, logout, updateConversations }}
+      value={{
+        user,
+        register,
+        login,
+        logout,
+        updateConversations,
+        changeConversation,
+        idToChangeConversation,
+      }}
     >
       {children}
     </AuthContext.Provider>

@@ -1,26 +1,30 @@
 import { useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
+import { GrAddCircle } from "react-icons/gr";
 
 import Button from "@/components/atoms/Button";
 import ChatList from "@/components/organisms/ChatList";
 import SidebarToggle from "@/components/molecules/SidebarToggle";
 import AuthButtons from "@/components/organisms/AuthButton";
-import { GrAddCircle } from "react-icons/gr";
+
+import { useAuth } from "@/contexts/AuthContext";
 
 interface SidebarProps {
   isSidebarExpanded: (isExpanded: boolean) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isSidebarExpanded }) => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const { changeConversation } = useAuth();
 
-  const toggleSidebar = () => {
-    setIsExpanded(!isExpanded);
-  };
+  const [isExpanded, setIsExpanded] = useState(true);
 
   useEffect(() => {
     isSidebarExpanded(isExpanded);
   }, [isExpanded]);
+
+  const toggleSidebar = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   return (
     <Box
@@ -54,6 +58,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarExpanded }) => {
           borderWidth={isExpanded ? "2px" : "0"}
           p={isExpanded ? "6" : "0"}
           fontWeight="normal"
+          onClick={() => changeConversation(null)}
         >
           <Box as={GrAddCircle} />
           {isExpanded && "Novo Chat"}

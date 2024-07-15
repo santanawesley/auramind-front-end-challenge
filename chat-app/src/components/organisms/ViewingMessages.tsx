@@ -51,7 +51,6 @@ const ViewingMessages: React.FC<ViewingMessagesProps> = ({
 
   useEffect(() => {
     scrollToBottom();
-    console.log("messages em lugar importante = ", messages);
   }, [messages]);
 
   return (
