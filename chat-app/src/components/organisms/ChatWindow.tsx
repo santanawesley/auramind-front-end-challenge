@@ -4,6 +4,7 @@ import { Box, IconButton, Flex } from "@chakra-ui/react";
 import MessageInput from "@/components/molecules/MessageInput";
 import ViewingMessages from "@/components/organisms/ViewingMessages";
 import ArrowDownIcon from "@/assets/icons/arrow-down.svg";
+import { getAIResponse } from "@/utils/aiSimulator";
 
 export interface Message {
   sender: "user" | "ai";
@@ -55,7 +56,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isSidebarExpanded }) => {
           },
           {
             sender: "ai",
-            content: "Resposta automatica da IA",
+            content: getAIResponse(input),
             name: "Wesley Santana",
           },
         ],
