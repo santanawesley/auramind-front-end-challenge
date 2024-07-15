@@ -1,76 +1,95 @@
-import { useState } from "react";
-import { Box, IconButton, Flex } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import { Box, Flex } from "@chakra-ui/react";
 
 import MessageInput from "@/components/molecules/MessageInput";
 import ViewingMessages from "@/components/organisms/ViewingMessages";
-import ArrowDownIcon from "@/assets/icons/arrow-down.svg";
 import { getAIResponse } from "@/utils/aiSimulator";
 
-export interface Message {
-  sender: "user" | "ai";
-  content: string;
-  name: string;
-}
-
-interface Conversation {
-  id: string;
-  title: string;
-  messages: Message[];
-}
+import { useAuth } from "@/contexts/AuthContext";
+import { Conversation, Message } from "@/types";
 
 type ChatWindowProps = {
   isSidebarExpanded: boolean;
 };
 
 const ChatWindow: React.FC<ChatWindowProps> = ({ isSidebarExpanded }) => {
-  const [conversations, setConversations] = useState<Conversation[]>([
-    {
-      id: "15",
-      title: "Teste 1",
-      messages: [
-        {
-          sender: "user",
-          content: "Primeira pergunta.",
-          name: "Wesley Santana",
-        },
-        {
-          sender: "ai",
-          content: "Primeira resposta.",
-          name: "Wesley Santana",
-        },
-      ],
-    },
-  ]);
+  const { user, updateConversations } = useAuth();
+
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [currentConversationId, setCurrentConversationId] = useState<
+    string | null
+  >(null);
   const [input, setInput] = useState("");
 
+  useEffect(() => {
+    const savedConversations = user?.conversations;
+    if (savedConversations?.length) {
+      setConversations(savedConversations);
+      setCurrentConversationId(
+        savedConversations ? savedConversations[0].id : null
+      );
+    }
+    if (!user) setConversations([]);
+    if (!user) setCurrentConversationId(null);
+  }, [user]);
+
+  useEffect(() => {
+    updateConversations(conversations);
+  }, [conversations]);
+
+  const truncate = (str: string, length: number) => {
+    return str.length > length ? str.substring(0, length) + "..." : str;
+  };
+
+  const getCurrentConversation = () => {
+    return conversations.find(
+      (conversation) => conversation.id === currentConversationId
+    );
+  };
+
   const sendMessage = () => {
-    setConversations([
-      {
-        id: "3",
-        title: "New message",
+    if (!currentConversationId) {
+      // não esta como conversa atual então cria uma nova e add ao array
+      const newConversationId = String(new Date().getTime());
+      const newConversation: Conversation = {
+        id: newConversationId,
+        title: truncate(input, 25),
         messages: [
-          {
-            sender: "user",
-            content: input,
-            name: "Wesley Santana",
-          },
-          {
-            sender: "ai",
-            content: getAIResponse(input),
-            name: "Wesley Santana",
-          },
+          { sender: "user", content: input },
+          { sender: "ai", content: getAIResponse(input) },
         ],
-      },
-    ]);
+      };
+      setConversations([...conversations, newConversation]);
+      setCurrentConversationId(newConversationId);
+    } else {
+      // se for a conversa atual ele edita ela
+      const updatedConversations = conversations.map((conversation) => {
+        if (conversation.id === currentConversationId) {
+          const updatedMessages: Message[] = [
+            ...conversation.messages,
+            { sender: "user", content: input },
+            { sender: "ai", content: getAIResponse(input) },
+          ];
+          return { ...conversation, messages: updatedMessages };
+        }
+        return conversation;
+      });
+      setConversations(updatedConversations);
+    }
     setInput("");
   };
 
   const handleDeleteMessage = (index: number) => {
-    console.log("");
-  };
-
-  const scrollToBottom = () => {
-    console.log("");
+    const updatedConversations = conversations.map((conversation) => {
+      if (conversation.id === currentConversationId) {
+        const updatedMessages = conversation.messages.filter(
+          (_, i) => i !== index && i !== index + 1
+        );
+        return { ...conversation, messages: updatedMessages };
+      }
+      return conversation;
+    });
+    setConversations(updatedConversations);
   };
 
   return (
@@ -81,16 +100,16 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isSidebarExpanded }) => {
       height="calc(100vh - 32px)"
       maxW={isSidebarExpanded ? "70%" : "90%"}
       m="auto"
-      position="relative"
     >
       <Box
         flex={1}
         justifyContent="flex-end"
         display="flex"
         flexDirection="column"
+        position="relative"
       >
         <ViewingMessages
-          messages={conversations[0].messages}
+          messages={getCurrentConversation()?.messages || []}
           onMessageDelete={handleDeleteMessage}
         />
         <MessageInput
@@ -99,19 +118,6 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isSidebarExpanded }) => {
           onSend={sendMessage}
         />
       </Box>
-      <IconButton
-        aria-label="Ir para última mensagem"
-        icon={<ArrowDownIcon />}
-        onClick={scrollToBottom}
-        position="absolute"
-        bottom="80px"
-        left="50%"
-        transform="translateX(-50%)"
-        bg="#fff"
-        border="2px solid gray"
-        borderRadius="100%"
-        p="1"
-      />
     </Flex>
   );
 };

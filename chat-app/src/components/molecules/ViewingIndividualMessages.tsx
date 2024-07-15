@@ -1,10 +1,10 @@
 import { Box, Text, Flex } from "@chakra-ui/react";
 import { GrTrash } from "react-icons/gr";
 
-import IconButton from "@/components/atoms/IconButton";
 import Avatar from "@/components/atoms/Avatar";
 
-import { Message } from "@/components/organisms/ChatWindow";
+import { Message } from "@/types";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface ViewingIndividualMessagesProps extends Message {
   onDelete?: () => void;
@@ -13,9 +13,10 @@ interface ViewingIndividualMessagesProps extends Message {
 const ViewingIndividualMessages: React.FC<ViewingIndividualMessagesProps> = ({
   sender,
   content,
-  name,
   onDelete,
 }) => {
+  const { user } = useAuth();
+
   return (
     <Flex
       align="start"
@@ -26,6 +27,7 @@ const ViewingIndividualMessages: React.FC<ViewingIndividualMessagesProps> = ({
       mr={sender === "ai" ? "auto" : "inherit"}
       gap="6"
       alignItems="flex-end"
+      width="70%"
     >
       {sender === "ai" ? (
         <Avatar
@@ -44,7 +46,7 @@ const ViewingIndividualMessages: React.FC<ViewingIndividualMessagesProps> = ({
         />
       ) : (
         // Caso o usuário não esteje logado, ele utiliza um avatar de usuário padrão ao invés das iniciais do nome
-        <Avatar name={name} />
+        <Avatar name={user?.name} />
       )}
 
       <Box
