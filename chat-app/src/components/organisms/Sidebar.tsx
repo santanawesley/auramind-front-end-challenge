@@ -6,7 +6,7 @@ import Button from "@/components/atoms/Button";
 import ChatList from "@/components/organisms/ChatList";
 import SidebarToggle from "@/components/molecules/SidebarToggle";
 import AuthButtons from "@/components/organisms/AuthButton";
-
+import useWindowSize from "@/utils/useWindowSize";
 import { useAuth } from "@/contexts/AuthContext";
 
 interface SidebarProps {
@@ -14,9 +14,17 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isSidebarExpanded }) => {
-  const { user, changeConversation } = useAuth();
+  const size = useWindowSize();
+  const isMobile = size.width && size.width <= 768;
 
+  const { user, changeConversation } = useAuth();
   const [isExpanded, setIsExpanded] = useState(true);
+
+  useEffect(() => {
+    if (isMobile) {
+      setIsExpanded(false);
+    }
+  }, [size.width, isMobile]);
 
   useEffect(() => {
     isSidebarExpanded(isExpanded);
@@ -26,16 +34,34 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarExpanded }) => {
     setIsExpanded(!isExpanded);
   };
 
+  const defineSize = () => {
+    let sizeWidth;
+    if (isMobile) {
+      sizeWidth = isExpanded ? "92%" : "auto";
+    } else {
+      sizeWidth = isExpanded ? "25%" : "5%";
+    }
+
+    return sizeWidth;
+  };
+
+  const newChat = () => {
+    changeConversation(null);
+    setIsExpanded(false);
+  };
+
   return (
     <Box
       h="calc(100vh - 32px)"
-      w={isExpanded ? "25%" : "5%"}
+      w={defineSize()}
       borderRadius="8"
       bg="#02040F"
       transition="width 0.3s"
       display="flex"
       flexDirection="column"
-      p="4"
+      p={isExpanded ? "4" : "1.5"}
+      position={isExpanded ? "absolute" : "inherit"}
+      zIndex="3"
     >
       <Box
         display="flex"
@@ -44,7 +70,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarExpanded }) => {
       >
         <SidebarToggle onToggle={toggleSidebar} isExpanded={isExpanded} />
 
-        {user && (
+        {user && (!isMobile || isExpanded) && (
           <Button
             mt="4"
             mb="4"
@@ -59,7 +85,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarExpanded }) => {
             borderWidth={isExpanded ? "2px" : "0"}
             p={isExpanded ? "6" : "0"}
             fontWeight="normal"
-            onClick={() => changeConversation(null)}
+            onClick={newChat}
           >
             <Box as={GrAddCircle} />
             {isExpanded && "Novo Chat"}
@@ -69,7 +95,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarExpanded }) => {
 
       {isExpanded ? (
         user ? (
-          <ChatList />
+          <ChatList changeChat={() => setIsExpanded(false)} />
         ) : (
           <Text
             color="#F8F8FF"

@@ -4,7 +4,11 @@ import ItemMenu from "@/components/atoms/ItemMenu";
 
 import { useAuth } from "@/contexts/AuthContext";
 
-const ChatList: React.FC = () => {
+type ChatListProps = {
+  changeChat: () => void;
+};
+
+const ChatList: React.FC<ChatListProps> = ({ changeChat }) => {
   const {
     user,
     changeConversation,
@@ -19,6 +23,11 @@ const ChatList: React.FC = () => {
       title: conversation.title,
     }))
     .reverse();
+
+  const changeUserConversation = (id: string) => {
+    changeConversation(id);
+    changeChat();
+  };
 
   return (
     <Box
@@ -50,7 +59,7 @@ const ChatList: React.FC = () => {
         <ItemMenu
           key={chat.id}
           title={chat.title}
-          idSelected={changeConversation}
+          idSelected={changeUserConversation}
           id={chat.id}
           idActive={idToChangeConversation}
           deleteItem={deleteConversation}
