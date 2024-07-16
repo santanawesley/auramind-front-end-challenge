@@ -17,6 +17,8 @@ interface AuthContextType {
   updateConversations: (conversations: Conversation[]) => void;
   changeConversation: (id: string | null) => void;
   idToChangeConversation: string | null;
+  deleteConversation: (id: string | null) => void;
+  idToDeleteConversation: string | null;
 }
 
 interface AuthProviderProps {
@@ -30,6 +32,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const [user, setUser] = useState<User | null>(null);
   const [idToChangeConversation, setIdToChangeConversation] = useState<
+    string | null
+  >(null);
+  const [idToDeleteConversation, setIdToDeleteConversation] = useState<
     string | null
   >(null);
 
@@ -100,6 +105,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         localStorage.setItem("users", JSON.stringify(users));
       }
       localStorage.removeItem("authenticatedUserEmail");
+      setIdToChangeConversation(null);
       setUser(null);
     }
   };
@@ -122,6 +128,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIdToChangeConversation(idToChangeConversation);
   };
 
+  const deleteConversation = (idToDeleteConversation: string | null) => {
+    setIdToDeleteConversation(idToDeleteConversation);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -132,6 +142,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         updateConversations,
         changeConversation,
         idToChangeConversation,
+        deleteConversation,
+        idToDeleteConversation,
       }}
     >
       {children}

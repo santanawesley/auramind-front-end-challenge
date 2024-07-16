@@ -5,7 +5,12 @@ import ItemMenu from "@/components/atoms/ItemMenu";
 import { useAuth } from "@/contexts/AuthContext";
 
 const ChatList: React.FC = () => {
-  const { user, changeConversation, idToChangeConversation } = useAuth();
+  const {
+    user,
+    changeConversation,
+    idToChangeConversation,
+    deleteConversation,
+  } = useAuth();
 
   const chatsTitles = user?.conversations
     ?.filter((conversation) => conversation.title)
@@ -41,16 +46,14 @@ const ChatList: React.FC = () => {
         scrollbarColor: "#888 #f1f1f1",
       }}
     >
-      <Text color="#f1f1f1" textAlign="center">
-        Histórico de conversas
-      </Text>
       {chatsTitles?.map((chat) => (
         <ItemMenu
           key={chat.id}
           title={chat.title}
-          idClicked={changeConversation}
+          idSelected={changeConversation}
           id={chat.id}
           idActive={idToChangeConversation}
+          deleteItem={deleteConversation}
         />
       ))}
     </Box>

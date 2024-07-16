@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 
 import MessageInput from "@/components/molecules/MessageInput";
@@ -18,6 +18,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isSidebarExpanded }) => {
     updateConversations,
     idToChangeConversation,
     changeConversation,
+    idToDeleteConversation,
   } = useAuth();
 
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -42,8 +43,29 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isSidebarExpanded }) => {
   }, [conversations]);
 
   useEffect(() => {
-    setCurrentConversationId(idToChangeConversation);
+    if (idToChangeConversation !== currentConversationId) {
+      setCurrentConversationId(idToChangeConversation);
+    }
   }, [idToChangeConversation]);
+
+  useEffect(() => {
+    handleDeleteConversation(idToDeleteConversation);
+  }, [idToDeleteConversation]);
+
+  const handleDeleteConversation = useCallback(
+    (idToDelete: string | null) => {
+      if (idToDelete) {
+        const updatedConversations = conversations.filter(
+          (conversation) => conversation.id !== idToDelete
+        );
+        setConversations(updatedConversations);
+        if (currentConversationId === idToDelete) {
+          setCurrentConversationId(null);
+        }
+      }
+    },
+    [conversations, currentConversationId]
+  );
 
   const truncate = (str: string, length: number) => {
     return str.length > length ? str.substring(0, length) + "..." : str;
