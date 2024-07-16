@@ -35,14 +35,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarExpanded }) => {
   };
 
   const defineSize = () => {
-    let sizeWidth;
     if (isMobile) {
-      sizeWidth = isExpanded ? "92%" : "auto";
-    } else {
-      sizeWidth = isExpanded ? "25%" : "5%";
+      return isExpanded ? "92%" : "auto";
     }
+    return isExpanded ? "25%" : "5%";
+  };
 
-    return sizeWidth;
+  const definePosition = () => {
+    if (isMobile && isExpanded) return "absolute";
+    return "inherit";
   };
 
   const newChat = () => {
@@ -60,7 +61,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarExpanded }) => {
       display="flex"
       flexDirection="column"
       p={isExpanded ? "4" : "1.5"}
-      position={isExpanded ? "absolute" : "inherit"}
+      position={definePosition()}
       zIndex="3"
     >
       <Box
