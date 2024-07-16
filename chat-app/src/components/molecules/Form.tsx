@@ -52,9 +52,24 @@ const Form: React.FC<FormProps> = ({ onSubmit, type }) => {
           onChange={(e) => setPassword(e.target.value)}
           color="#F8F8FF"
         />
-        <Button type="submit" colorScheme="blue">
+        <Box
+          as="button"
+          type="submit"
+          disabled={!email || !password}
+          bg={!email || !password ? "#6C757D" : "#007BFF"}
+          _hover={{ bg: !email || !password ? "#6C757D" : "#0056b3" }}
+          _active={{
+            bg: !email || !password ? "#6C757D" : "#0056b3",
+            transform: "scale(0.98)",
+          }}
+          cursor={!email || !password ? "default" : "pointer"}
+          w="full"
+          h="40px"
+          borderRadius="5px"
+          color="#F8F8FF"
+        >
           Enviar
-        </Button>
+        </Box>
       </VStack>
     </Box>
   );
