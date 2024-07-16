@@ -35,6 +35,7 @@ const Form: React.FC<FormProps> = ({ onSubmit, type }) => {
             placeholder="Informe seu Nome"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            color="#F8F8FF"
           />
         )}
         <Input
@@ -42,12 +43,14 @@ const Form: React.FC<FormProps> = ({ onSubmit, type }) => {
           placeholder="Informe seu E-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          color="#F8F8FF"
         />
         <Input
           type="password"
           placeholder="Informe sua Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          color="#F8F8FF"
         />
         <Button type="submit" colorScheme="blue">
           Enviar
