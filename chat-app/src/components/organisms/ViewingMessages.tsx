@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Box, Text, VStack } from "@chakra-ui/react";
 import { GrLinkBottom } from "react-icons/gr";
 
+import { AnimatePresence } from "framer-motion";
 import Avatar from "@/components/atoms/Avatar";
 import IconButton from "@/components/atoms/IconButton";
 import RobotSvg from "@/assets/icons/Robot";
@@ -68,24 +69,25 @@ const ViewingMessages: React.FC<ViewingMessagesProps> = ({
             overflow="auto"
             ref={containerRef}
             sx={{
-              /* Esconder a barra de rolagem em diferentes navegadores */
               "&::-webkit-scrollbar": {
                 width: "0px",
                 height: "0px",
               },
-              scrollbarWidth: "none" /* Firefox */,
-              "-msOverflowStyle": "none" /* Internet Explorer 10+ */,
+              scrollbarWidth: "none",
+              "-msOverflowStyle": "none",
             }}
           >
-            {messages.map((message, index) => (
-              <ViewingIndividualMessages
-                key={index}
-                sender={message.sender}
-                content={message.content}
-                onDelete={() => onMessageDelete(index)}
-              />
-            ))}
-
+            <AnimatePresence initial={false}>
+              {messages.map((message, index) => (
+                <ViewingIndividualMessages
+                  key={index}
+                  sender={message.sender}
+                  content={message.content}
+                  onDelete={() => onMessageDelete(index)}
+                  index={index}
+                />
+              ))}
+            </AnimatePresence>
             <Box ref={messagesEndRef} />
           </VStack>
           {isScrolled && (

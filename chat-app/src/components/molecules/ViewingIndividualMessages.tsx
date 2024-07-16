@@ -1,5 +1,6 @@
 import { Box, Text, Flex } from "@chakra-ui/react";
 import { GrTrash } from "react-icons/gr";
+import { motion } from "framer-motion";
 
 import Avatar from "@/components/atoms/Avatar";
 import RobotSvg from "@/assets/icons/Robot";
@@ -8,7 +9,10 @@ import { useAuth } from "@/contexts/AuthContext";
 
 interface ViewingIndividualMessagesProps extends Message {
   onDelete?: () => void;
+  index: number;
 }
+
+const MotionBox = motion(Box);
 
 const ViewingIndividualMessages: React.FC<ViewingIndividualMessagesProps> = ({
   sender,
@@ -32,11 +36,16 @@ const ViewingIndividualMessages: React.FC<ViewingIndividualMessagesProps> = ({
       {sender === "ai" ? (
         <Avatar icon={<RobotSvg />} />
       ) : (
-        // Caso o usuário não esteje logado, ele utiliza um avatar de usuário padrão ao invés das iniciais do nome
+        // Caso o usuário não esteje logado, ele utiliza um avatar
+        // de usuário padrão ao invés das iniciais do nome
         <Avatar name={user?.name} />
       )}
 
-      <Box
+      <MotionBox
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.8 }}
+        transition={{ duration: 0.5 }}
         bg="#FFFFFF"
         border="1px solid #DDDDDD"
         borderRight={sender === "user" ? "6px solid #02040F" : ""}
@@ -63,7 +72,7 @@ const ViewingIndividualMessages: React.FC<ViewingIndividualMessagesProps> = ({
           />
         )}
         <Text pr="40px">{content}</Text>
-      </Box>
+      </MotionBox>
     </Flex>
   );
 };
