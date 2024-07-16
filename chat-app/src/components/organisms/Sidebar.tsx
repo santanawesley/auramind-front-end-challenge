@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { GrAddCircle } from "react-icons/gr";
 
 import Button from "@/components/atoms/Button";
@@ -14,7 +14,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isSidebarExpanded }) => {
-  const { changeConversation } = useAuth();
+  const { user, changeConversation } = useAuth();
 
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -44,28 +44,45 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarExpanded }) => {
       >
         <SidebarToggle onToggle={toggleSidebar} isExpanded={isExpanded} />
 
-        <Button
-          mt="4"
-          mb="4"
-          mr="auto"
-          ml={isExpanded ? "0" : "auto"}
-          colorScheme="teal"
-          size={isExpanded ? "md" : "sm"}
-          width={isExpanded ? "100%" : "auto"}
-          justifyContent="space-between"
-          bg="#0A0C19"
-          borderColor="#282934"
-          borderWidth={isExpanded ? "2px" : "0"}
-          p={isExpanded ? "6" : "0"}
-          fontWeight="normal"
-          onClick={() => changeConversation(null)}
-        >
-          <Box as={GrAddCircle} />
-          {isExpanded && "Novo Chat"}
-        </Button>
+        {user && (
+          <Button
+            mt="4"
+            mb="4"
+            mr="auto"
+            ml={isExpanded ? "0" : "auto"}
+            colorScheme="teal"
+            size={isExpanded ? "md" : "sm"}
+            width={isExpanded ? "100%" : "auto"}
+            justifyContent="space-between"
+            bg="#0A0C19"
+            borderColor="#282934"
+            borderWidth={isExpanded ? "2px" : "0"}
+            p={isExpanded ? "6" : "0"}
+            fontWeight="normal"
+            onClick={() => changeConversation(null)}
+          >
+            <Box as={GrAddCircle} />
+            {isExpanded && "Novo Chat"}
+          </Button>
+        )}
       </Box>
 
-      {isExpanded ? <ChatList /> : ""}
+      {isExpanded ? (
+        user ? (
+          <ChatList />
+        ) : (
+          <Text
+            color="#F8F8FF"
+            display="flex"
+            maxW="90%"
+            m="auto"
+            textAlign="center"
+          >
+            Faça Login para gerar e visualizar o seu histórico.
+          </Text>
+        )
+      ) : null}
+
       <AuthButtons isSidebarExpanded={isExpanded} />
     </Box>
   );
