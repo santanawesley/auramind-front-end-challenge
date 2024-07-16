@@ -92,6 +92,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       localStorage.setItem("users", JSON.stringify(users));
       localStorage.setItem("authenticatedUserEmail", foundUser.email);
       setUser(foundUser);
+      setIdToChangeConversation(null);
       return true;
     }
 
