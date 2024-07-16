@@ -56,9 +56,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const register = (newUser: Omit<User, "isAuthenticated">) => {
     const users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
+    if (!newUser.email || !newUser.password)
+      return showToast("Informe todos os seus");
+
     const foundUser = users.find((u: User) => u.email === newUser.email);
 
-    if (foundUser) return showToast();
+    if (foundUser) return showToast("Usuário já cadastrado!");
 
     const user = { ...newUser, isAuthenticated: true, conversations: [] };
     users.push(user);
@@ -67,10 +70,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUser(user);
   };
 
-  const showToast = () => {
+  const showToast = (description: string) => {
     toast({
       title: "Atenção",
-      description: "Usuário já cadastrado!",
+      description: description,
       status: "error",
       duration: 9000,
       isClosable: true,
