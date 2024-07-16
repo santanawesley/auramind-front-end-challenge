@@ -47,6 +47,8 @@ const MessageInput: React.FC<MessageInputProps> = ({
         border="none"
         bg="#F9FAFA"
         zIndex="2"
+        _hover={{ transform: "scale(1.1)" }}
+        transition="transform 0.2s ease"
       />
     </Flex>
   );

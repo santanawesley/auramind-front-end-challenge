@@ -107,6 +107,8 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ isSidebarExpanded }) => {
               aria-label="Logout"
               icon={<GrLogout />}
               onClick={handleLogout}
+              _hover={{ transform: "scale(1.1)" }}
+              transition="transform 0.2s ease"
             />
           ) : (
             ""

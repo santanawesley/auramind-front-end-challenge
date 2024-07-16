@@ -60,8 +60,8 @@ const ViewingIndividualMessages: React.FC<ViewingIndividualMessagesProps> = ({
         {sender === "user" && (
           <Box
             as={GrTrash}
-            w={"22px"}
-            h={"22px"}
+            w={"30px"}
+            h={"30px"}
             aria-label="Apagar mensagem"
             onClick={onDelete}
             bg="none"
@@ -69,6 +69,9 @@ const ViewingIndividualMessages: React.FC<ViewingIndividualMessagesProps> = ({
             position="absolute"
             bottom="1"
             left={"-45px"}
+            _hover={{ transform: "rotate(90deg)" }}
+            transition="transform 0.5s ease"
+            p="1"
           />
         )}
         <Text pr="40px">{content}</Text>

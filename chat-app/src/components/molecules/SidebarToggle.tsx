@@ -16,6 +16,8 @@ const SidebarToggle: React.FC<SidebarToggleProps> = ({
       aria-label="Alternar barra lateral"
       onClick={onToggle}
       bg="#F8F8FF"
+      _hover={{ transform: "scale(1.1)" }}
+      transition="transform 0.2s ease"
     />
   );
 };

@@ -20,13 +20,16 @@ const ItemMenu: React.FC<ItemMenuProps> = ({
     <Flex alignItems="center" gap="10px">
       <Box
         as={GrTrash}
-        w={"16px"}
-        h={"16px"}
+        w={"24px"}
+        h={"24px"}
         aria-label="Apagar item"
         onClick={() => deleteItem(id)}
         bg="none"
         cursor="pointer"
         color="#ccc"
+        _hover={{ transform: "rotate(90deg)" }}
+        transition="transform 0.5s ease"
+        p="1"
       />
 
       <Box

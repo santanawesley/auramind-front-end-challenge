@@ -103,6 +103,11 @@ const ViewingMessages: React.FC<ViewingMessagesProps> = ({
               border="2px solid gray"
               borderRadius="100%"
               p="1"
+              boxShadow="0px 2px 4px rgba(0, 0, 0, 0.1)"
+              _hover={{
+                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.3)",
+              }}
+              transition="box-shadow 0.2s ease"
             />
           )}
         </>
