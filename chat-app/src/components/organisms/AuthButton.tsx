@@ -86,7 +86,6 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ isSidebarExpanded }) => {
             {/* Caso o usuário não esteje logado, ele utiliza um avatar de usuário 
             padrão ao invés das iniciais do nome */}
             <Avatar
-              src="/images/default-avatar.png"
               width={isSidebarExpanded ? "12" : "9"}
               height={isSidebarExpanded ? "12" : "9"}
               name={userData?.name}
