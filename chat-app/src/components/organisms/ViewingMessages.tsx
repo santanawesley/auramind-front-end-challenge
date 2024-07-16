@@ -129,7 +129,9 @@ const ViewingMessages: React.FC<ViewingMessagesProps> = ({
               histórico.
             </Text>
           ) : (
-            <Text> Envie uma nova mensagem para podermos conversar. </Text>
+            <Text textAlign="center">
+              Envie uma nova mensagem para podermos conversar.
+            </Text>
           )}
         </Box>
       )}
