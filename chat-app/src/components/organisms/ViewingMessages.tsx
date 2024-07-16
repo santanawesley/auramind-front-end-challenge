@@ -116,8 +116,9 @@ const ViewingMessages: React.FC<ViewingMessagesProps> = ({
           <Avatar icon={<RobotSvg />} />
 
           {user ? (
-            <Text>
-              Envie uma nova mensagem ou selecione uma conversa do seu
+            <Text textAlign="center">
+              Conversa sem mensagem. <br />
+              Envie uma nova mensagem ou selecione outra conversa do seu
               histórico.
             </Text>
           ) : (
