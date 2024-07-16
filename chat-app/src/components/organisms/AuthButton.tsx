@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, useToast } from "@chakra-ui/react";
 import { GrLogout } from "react-icons/gr";
 
 import Avatar from "@/components/atoms/Avatar";
@@ -15,6 +15,7 @@ type AuthButtonsProps = {
 };
 
 const AuthButtons: React.FC<AuthButtonsProps> = ({ isSidebarExpanded }) => {
+  const toast = useToast();
   const { user, login, logout, register } = useAuth();
 
   const [userData, setUserData] = useState<User | null>();
@@ -31,11 +32,22 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ isSidebarExpanded }) => {
 
   const handleLogin = ({ email, password }: User) => {
     const success = login(email, password);
-    if (!success) {
-      alert("E-mail e/ou senha incorretos");
-    } else {
+    if (success) {
       setShowForm(null);
+    } else {
+      showToast();
     }
+  };
+
+  const showToast = () => {
+    toast({
+      title: "Atenção",
+      description: "E-mail e/ou senha incorretos",
+      status: "error",
+      duration: 9000,
+      isClosable: true,
+      position: "top-right",
+    });
   };
 
   const handleLogout = () => {

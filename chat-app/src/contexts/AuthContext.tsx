@@ -5,6 +5,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
+import { useToast } from "@chakra-ui/react";
 
 import { User, Conversation } from "@/types";
 
@@ -25,6 +26,8 @@ interface AuthProviderProps {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const toast = useToast();
+
   const [user, setUser] = useState<User | null>(null);
   const [idToChangeConversation, setIdToChangeConversation] = useState<
     string | null
@@ -50,13 +53,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
     const foundUser = users.find((u: User) => u.email === newUser.email);
 
-    if (foundUser) return alert("Usuário já cadastrado!");
+    if (foundUser) return showToast();
 
     const user = { ...newUser, isAuthenticated: true, conversations: [] };
     users.push(user);
     localStorage.setItem("users", JSON.stringify(users));
     localStorage.setItem("authenticatedUserEmail", user.email);
     setUser(user);
+  };
+
+  const showToast = () => {
+    toast({
+      title: "Atenção",
+      description: "Usuário já cadastrado!",
+      status: "error",
+      duration: 9000,
+      isClosable: true,
+      position: "top-right",
+    });
   };
 
   const login = (email: string, password: string): boolean => {
