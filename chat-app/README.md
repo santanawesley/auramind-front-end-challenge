@@ -1,40 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Auramind Front-End Challenge
 
-## Getting Started
+Esse é o desafio de uma aplicação de chat que simula respostas com IA, utilizando para isso Next.js, TypeScript, Chakra UI, Jest, RTL e Framer Motion.
 
-First, run the development server:
+## Objetivo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Criar uma aplicação de chat que simule a interação com uma IA, utilizando Next.js e dados locais. O chat deve permitir a troca de mensagens entre o usuário e uma IA simulada, armazenando as mensagens no estado local do aplicativo.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Funcionalidades
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- Exibir uma interface de chat com áreas de conversação para o usuário e a IA.
+- Permitir que o usuário envie mensagens.
+- A IA deve responder automaticamente com uma mensagem fixa (não haverá acesso à API externa).
+- As conversas devem ser persistidas localmente (por exemplo, utilizando localStorage ou IndexedDB) para que não sejam perdidas ao recarregar a página.
+- Utilizar a sessão para identificar e gerenciar conversas distintas.
+- Utilizar o Chakra UI para estilização da interface.
+- Utilizar o Framer Motion para animações de mensagens.
+- Executar testes unitários para os principais componentes utilizando Jest e React Testing Library.
+- A aplicação é responsiva.
+- Desenvolvido funcionalidade de Registro de usuário, Login e Logout.
+- Acesso ao Chat pode ser feito tanto logado quanto deslogado, sendo a vantagem do logado a persistência dos dados e acesso ao histórico.
+- Tanto as conversas quanto as mensagens podem ser excluidas.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Tecnologias Utilizadas
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- Next.js
+- TypeScript
+- Chakra UI
+- Jest
+- React Testing Library (RTL)
+- Framer Motion
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Organização do Projeto
 
-## Learn More
+Conforme orientação a abordagem utilizada foi a de Atomic Design.
 
-To learn more about Next.js, take a look at the following resources:
+## Melhorias
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Diversas melhorias podem ser feitas. Devido a minha impossibilidade de ficar por conta desse projeto durante essa semana acabei não desenvolvendo tudo o que eu desejava. Como não foi proposto um layout e nem todas as funcionalidades especificas me alegro em entregar tudo o que foi pedido.
+Algumas opções de melhorias são:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Datas nas conversas
+- Troca de senhas
+- Confirmações de exclusão de conversas e mensagens
+- Edição de títulos das conversas
+- Cobertura mais ampla dos testes
 
-## Deploy on Vercel
+## Agradecimentos
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> **_Agradeço à equipe da Auramind e da Ímã Learning Place pela oportunidade e espero proseguirmos juntos._**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Desenvolvedor:
+
+> Wesley R. de Santana - wesley0807@gmail.com
