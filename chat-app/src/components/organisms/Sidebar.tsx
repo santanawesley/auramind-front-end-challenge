@@ -48,7 +48,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarExpanded }) => {
 
   const newChat = () => {
     changeConversation(null);
-    setIsExpanded(false);
+    isMobile ? setIsExpanded(false) : () => null;
   };
 
   return (
@@ -96,7 +96,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarExpanded }) => {
 
       {isExpanded ? (
         user ? (
-          <ChatList changeChat={() => setIsExpanded(false)} />
+          <ChatList
+            changeChat={isMobile ? () => setIsExpanded(false) : () => null}
+          />
         ) : (
           <Text
             color="#F8F8FF"
